@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,34 +11,32 @@
 ╚═══════════════════════════════════════════════════════════╝
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 @layer base {
   :root {
-    /* ━━━ Pure Blacks & Elegant Grays ━━━ */
-    --background: 0 0% 0%;
-    /* Pure black */
-    --foreground: 0 0% 98%;
-    /* Almost white */
+    /* ━━━ Light Mode (Default) ━━━ */
+    --background: 0 0% 100%;
+    /* Pure white */
+    --foreground: 222 47% 11%;
+    /* Dark gray */
 
-    --card: 220 15% 8%;
-    /* Deep charcoal */
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 100%;
+    /* White */
+    --card-foreground: 222 47% 11%;
 
-    --popover: 220 15% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
     /* ━━━ Refined Accents ━━━ */
     --primary: 220 90% 56%;
     /* Electric Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 12%;
-    /* Subtle gray */
-    --secondary-foreground: 0 0% 85%;
+    --secondary: 210 40% 96%;
+    /* Light gray */
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
     --accent: 260 70% 60%;
     /* Royal Purple */
@@ -50,44 +50,67 @@
     --warning: 38 92% 50%;
 
     /* ━━━ Borders & Inputs ━━━ */
-    --border: 0 0% 100% / 0.06;
-    /* Ultra-subtle */
-    --input: 0 0% 100% / 0.08;
+    --border: 214 32% 91%;
+    /* Light border */
+    --input: 214 32% 91%;
     --ring: 220 90% 56%;
 
     --radius: 1rem;
 
     /* ━━━ Sidebar ━━━ */
-    --sidebar-background: 220 20% 6%;
-    --sidebar-foreground: 0 0% 90%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222 47% 11%;
     --sidebar-primary: 220 90% 56%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 12%;
-    --sidebar-accent-foreground: 0 0% 85%;
-    --sidebar-border: 0 0% 100% / 0.06;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
     --sidebar-ring: 220 90% 56%;
   }
 
   .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 98%;
-    --card: 220 15% 8%;
-    --card-foreground: 0 0% 95%;
-    --popover: 220 15% 8%;
-    --popover-foreground: 0 0% 95%;
+    /* ━━━ Refined Dark Blacks & Elegant Grays ━━━ */
+    --background: 222 47% 4%;
+    /* Softer than pure black */
+    --foreground: 210 40% 98%;
+    /* Almost white with blue hint */
+
+    --card: 222 47% 6%;
+    /* Deep charcoal with blue tint */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 6%;
+    --popover-foreground: 210 40% 98%;
+
     --primary: 220 90% 56%;
+    /* Electric Blue */
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 0 0% 85%;
-    --muted: 220 15% 15%;
-    --muted-foreground: 0 0% 55%;
+
+    --secondary: 217 33% 12%;
+    /* Subtle gray */
+    --secondary-foreground: 210 40% 90%;
+
+    --muted: 217 33% 15%;
+    --muted-foreground: 215 20% 65%;
+    /* Better contrast */
+
     --accent: 260 70% 60%;
+    /* Royal Purple */
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 70% 55%;
+
+    --destructive: 0 63% 59%;
+    /* Softer red */
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 100% / 0.06;
-    --input: 0 0% 100% / 0.08;
+
+    --border: 217 33% 15%;
+    /* Subtle border */
+    --input: 217 33% 15%;
     --ring: 220 90% 56%;
+  }
+
+  /* ━━━ Smooth Theme Transitions ━━━ */
+  * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 }
 

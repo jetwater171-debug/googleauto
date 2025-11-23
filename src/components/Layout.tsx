@@ -3,10 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { LayoutDashboard, MessageSquare, Calendar, LogOut, Send, Moon, Sun, TrendingUp, ImageIcon, Megaphone, Sparkles } from "lucide-react";
+import { LayoutDashboard, MessageSquare, Calendar, LogOut, Send, Moon, Sun, TrendingUp, ImageIcon, Megaphone, Sparkles, Monitor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoFull from "@/assets/logo-full.png";
-import { useEffect, useState } from "react";
+import { useTheme } from "./ThemeProvider";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,21 +22,7 @@ const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    const initialTheme = savedTheme || "dark";
-    setTheme(initialTheme);
-    document.documentElement.classList.toggle("dark", initialTheme === "dark");
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  };
+  const { theme, setTheme, effectiveTheme } = useTheme();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -148,19 +140,47 @@ const Layout = ({ children }: LayoutProps) => {
 
           {/* Footer Actions */}
           <div className="p-3 border-t border-white/[0.06] space-y-1">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-white/[0.04] h-10"
-              onClick={toggleTheme}
-            >
-              {theme === "dark" ? (
-                <Sun className="mr-2 h-4 w-4" />
-              ) : (
-                <Moon className="mr-2 h-4 w-4" />
-              )}
-              <span className="text-sm">{theme === "dark" ? "Modo Claro" : "Modo Escuro"}</span>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-white/[0.04] h-10"
+                >
+                  {effectiveTheme === "dark" ? (
+                    <Moon className="mr-2 h-4 w-4" />
+                  ) : (
+                    <Sun className="mr-2 h-4 w-4" />
+                  )}
+                  <span className="text-sm">
+                    {theme === "system" ? "Sistema" : theme === "dark" ? "Escuro" : "Claro"}
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-36">
+                <DropdownMenuItem
+                  onClick={() => setTheme("light")}
+                  className={cn(theme === "light" && "bg-accent")}
+                >
+                  <Sun className="mr-2 h-4 w-4" />
+                  <span>Claro</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setTheme("dark")}
+                  className={cn(theme === "dark" && "bg-accent")}
+                >
+                  <Moon className="mr-2 h-4 w-4" />
+                  <span>Escuro</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setTheme("system")}
+                  className={cn(theme === "system" && "bg-accent")}
+                >
+                  <Monitor className="mr-2 h-4 w-4" />
+                  <span>Sistema</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             <Button
               variant="ghost"
