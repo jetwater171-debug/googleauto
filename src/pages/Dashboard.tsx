@@ -12,6 +12,7 @@ interface PostHistory {
   content: string;
   posted_at: string;
   account_username: string | null;
+  account_profile_picture: string | null;
 }
 
 const Dashboard = () => {
@@ -72,7 +73,7 @@ const Dashboard = () => {
           id,
           content,
           posted_at,
-          threads_accounts!post_history_account_id_fkey (username)
+          threads_accounts!post_history_account_id_fkey (username, profile_picture_url)
         `)
         .order("posted_at", { ascending: false })
         .limit(10);
@@ -83,7 +84,8 @@ const Dashboard = () => {
         id: post.id,
         content: post.content,
         posted_at: post.posted_at,
-        account_username: post.threads_accounts?.username || null
+        account_username: post.threads_accounts?.username || null,
+        account_profile_picture: post.threads_accounts?.profile_picture_url || null
       })) || [];
 
       setPostHistory(formattedHistory);
@@ -197,38 +199,54 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="border-white/10 bg-black/20 backdrop-blur-sm">
+          <Card className="border-white/5 bg-black/20 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
+              <CardTitle className="flex items-center gap-2 text-lg font-semibold tracking-tight">
                 <MessageSquare className="h-5 w-5 text-primary" />
                 Histórico Recente
               </CardTitle>
             </CardHeader>
             <CardContent>
               {postHistory.length === 0 ? (
-                <div className="text-center py-8">
-                  <div className="h-12 w-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-3">
+                <div className="text-center py-12">
+                  <div className="h-12 w-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
                     <MessageSquare className="h-6 w-6 text-muted-foreground/50" />
                   </div>
                   <p className="text-sm text-muted-foreground">Nenhum post realizado ainda</p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-1">
                   {postHistory.map((post) => (
                     <div
                       key={post.id}
-                      className="group relative pl-4 border-l-2 border-white/10 hover:border-primary transition-colors duration-300"
+                      className="group flex items-start gap-3 p-3 rounded-xl hover:bg-white/5 transition-all duration-200"
                     >
-                      <p className="font-medium text-sm text-white/90 line-clamp-2 group-hover:text-primary transition-colors">{post.content}</p>
-                      <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Users className="h-3 w-3" />
-                          {post.account_username || "Desconhecido"}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {format(new Date(post.posted_at), "HH:mm", { locale: ptBR })}
-                        </span>
+                      <div className="shrink-0 mt-1">
+                        {post.account_profile_picture ? (
+                          <img
+                            src={post.account_profile_picture}
+                            alt={post.account_username || "Avatar"}
+                            className="h-8 w-8 rounded-full object-cover ring-2 ring-white/10"
+                          />
+                        ) : (
+                          <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center ring-2 ring-white/10">
+                            <Users className="h-4 w-4 text-white/60" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-white/90 line-clamp-2 leading-relaxed font-medium group-hover:text-primary transition-colors">
+                          {post.content}
+                        </p>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <span className="text-xs font-medium text-white/40">
+                            {post.account_username || "Desconhecido"}
+                          </span>
+                          <span className="text-[10px] text-white/20">•</span>
+                          <span className="text-xs text-white/40 flex items-center gap-1">
+                            {format(new Date(post.posted_at), "d 'de' MMM 'às' HH:mm", { locale: ptBR })}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   ))}

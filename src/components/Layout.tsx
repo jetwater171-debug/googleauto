@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -79,11 +80,38 @@ const Layout = ({
   }];
 
   return (
-    <div className="min-h-screen flex bg-background selection:bg-primary/20">
+    <div className="min-h-screen flex bg-background selection:bg-primary/20 overflow-hidden">
       {/* Dynamic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-primary/5 blur-[120px] animate-pulse" />
-        <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-500/5 blur-[100px] animate-pulse delay-1000" />
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+            x: [0, 50, 0],
+            y: [0, 30, 0]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-primary/10 blur-[120px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3],
+            x: [0, -50, 0],
+            y: [0, -50, 0]
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+          className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[100px]"
+        />
       </div>
 
       {/* Floating Glass Sidebar */}
@@ -91,7 +119,13 @@ const Layout = ({
         {/* Logo Area */}
         <div className="p-6 relative z-10 border-b border-white/5">
           <div className="flex items-center justify-center">
-            <img src={logoFull} alt="AutoThreads" className="h-12 w-auto object-contain" />
+            <motion.img
+              whileHover={{ scale: 1.05, rotate: 2 }}
+              whileTap={{ scale: 0.95 }}
+              src={logoFull}
+              alt="AutoThreads"
+              className="h-12 w-auto object-contain"
+            />
           </div>
         </div>
 
@@ -102,12 +136,15 @@ const Layout = ({
             const isActive = location.pathname === item.path;
             return (
               <Link key={item.path} to={item.path} className="block group">
-                <div className={cn(
-                  "flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-all duration-300 relative overflow-hidden group-hover:bg-white/5",
-                  isActive
-                    ? "bg-white/10 text-white shadow-inner border border-white/5"
-                    : "text-muted-foreground hover:text-white"
-                )}>
+                <motion.div
+                  whileHover={{ x: 5, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+                  whileTap={{ scale: 0.98 }}
+                  className={cn(
+                    "flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-colors duration-300 relative overflow-hidden",
+                    isActive
+                      ? "bg-white/10 text-white shadow-inner border border-white/5"
+                      : "text-muted-foreground hover:text-white"
+                  )}>
                   <Icon className={cn(
                     "h-5 w-5 transition-all duration-300",
                     isActive ? "text-primary scale-110" : "group-hover:text-white group-hover:scale-110"
@@ -116,9 +153,12 @@ const Layout = ({
 
                   {/* Active Indicator */}
                   {isActive && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full shadow-[0_0_10px_rgba(0,122,255,0.5)]" />
+                    <motion.div
+                      layoutId="activeIndicator"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full shadow-[0_0_10px_rgba(0,122,255,0.5)]"
+                    />
                   )}
-                </div>
+                </motion.div>
               </Link>
             );
           })}
@@ -146,10 +186,19 @@ const Layout = ({
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-80 p-6 md:p-10 min-h-screen transition-all duration-500 relative z-10">
-        <div className="max-w-7xl mx-auto space-y-10 animate-fade-in">
-          {children}
-        </div>
+      <main className="flex-1 md:ml-80 p-6 md:p-10 min-h-screen relative z-10 overflow-x-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="max-w-7xl mx-auto space-y-10"
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
       </main>
     </div>
   );

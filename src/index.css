@@ -92,7 +92,15 @@ All colors MUST be HSL.
 
 @layer utilities {
   .glass-panel {
-    @apply bg-black/40 backdrop-blur-2xl border border-white/10 shadow-2xl;
+    @apply bg-black/40 backdrop-blur-3xl border border-white/10 shadow-2xl;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
   }
 
   .text-gradient {
