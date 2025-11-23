@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { LayoutDashboard, MessageSquare, Calendar, LogOut, Sparkles, Send, Moon, Sun, TrendingUp, ImageIcon, Megaphone } from "lucide-react";
+import { LayoutDashboard, MessageSquare, Calendar, LogOut, Send, Moon, Sun, TrendingUp, ImageIcon, Megaphone, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoFull from "@/assets/logo-full.png";
 import { useEffect, useState } from "react";
@@ -12,14 +12,10 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({
-  children
-}: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
@@ -45,158 +41,154 @@ const Layout = ({
     navigate("/auth");
   };
 
-  const navItems = [{
-    path: "/dashboard",
-    label: "Dashboard",
-    icon: LayoutDashboard
-  }, {
-    path: "/accounts",
-    label: "Contas",
-    icon: Sparkles
-  }, {
-    path: "/phrases",
-    label: "Frases",
-    icon: MessageSquare
-  }, {
-    path: "/images",
-    label: "Imagens",
-    icon: ImageIcon
-  }, {
-    path: "/periodic-posts",
-    label: "Posts Periódicos",
-    icon: Calendar
-  }, {
-    path: "/campaigns",
-    label: "Campanhas",
-    icon: Megaphone
-  }, {
-    path: "/manual-post",
-    label: "Post Manual",
-    icon: Send
-  }, {
-    path: "/analytics",
-    label: "Analytics",
-    icon: TrendingUp
-  }];
+  const navItems = [
+    { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { path: "/accounts", label: "Contas", icon: Sparkles },
+    { path: "/phrases", label: "Frases", icon: MessageSquare },
+    { path: "/images", label: "Imagens", icon: ImageIcon },
+    { path: "/periodic-posts", label: "Posts Periódicos", icon: Calendar },
+    { path: "/campaigns", label: "Campanhas", icon: Megaphone },
+    { path: "/manual-post", label: "Post Manual", icon: Send },
+    { path: "/analytics", label: "Analytics", icon: TrendingUp }
+  ];
 
   return (
-    <div className="min-h-screen flex bg-background selection:bg-primary/20 overflow-hidden">
-      {/* Dynamic Background */}
+    <div className="min-h-screen flex bg-background overflow-hidden">
+      {/* Subtle Gradient Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <motion.div
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-            x: [0, 50, 0],
-            y: [0, 30, 0]
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-primary/10 blur-[120px]"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.6, 0.3],
-            x: [0, -50, 0],
-            y: [0, -50, 0]
+            scale: [1, 1.1, 1],
+            opacity: [0.02, 0.04, 0.02],
+            x: [0, 30, 0],
+            y: [0, 20, 0]
           }}
           transition={{
             duration: 25,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
+            ease: "easeInOut"
           }}
-          className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[100px]"
+          className="absolute top-[-20%] right-[-10%] w-[1000px] h-[1000px] rounded-full bg-primary/[0.03] blur-[150px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.15, 1],
+            opacity: [0.02, 0.05, 0.02],
+            x: [0, -30, 0],
+            y: [0, -20, 0]
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3
+          }}
+          className="absolute bottom-[-20%] left-[-10%] w-[900px] h-[900px] rounded-full bg-accent/[0.03] blur-[150px]"
         />
       </div>
 
-      {/* Floating Glass Sidebar */}
-      <aside className="hidden md:flex w-72 flex-col fixed inset-y-6 left-6 z-50 rounded-3xl border border-white/5 bg-black/20 backdrop-blur-2xl shadow-2xl overflow-hidden transition-all duration-500 hover:border-white/10">
-        {/* Logo Area */}
-        <div className="p-6 relative z-10 border-b border-white/5">
-          <div className="flex items-center justify-center">
-            <motion.img
-              whileHover={{ scale: 1.05, rotate: 2 }}
-              whileTap={{ scale: 0.95 }}
-              src={logoFull}
-              alt="AutoThreads"
-              className="h-12 w-auto object-contain"
-            />
+      {/* Elegant Floating Sidebar */}
+      <aside className="hidden md:flex w-64 flex-col fixed inset-y-0 left-0 z-50">
+        <div className="m-4 flex-1 glass-card rounded-2xl overflow-hidden flex flex-col">
+          {/* Logo Area */}
+          <div className="p-6 border-b border-white/[0.06]">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="flex items-center justify-center"
+            >
+              <img
+                src={logoFull}
+                alt="AutoThreads"
+                className="h-10 w-auto object-contain"
+              />
+            </motion.div>
           </div>
-        </div>
 
-        {/* Navigation */}
-        <div className="flex-1 overflow-y-auto py-4 px-4 space-y-1.5 scrollbar-none">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            return (
-              <Link key={item.path} to={item.path} className="block group">
-                <motion.div
-                  whileHover={{ x: 5, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-                  whileTap={{ scale: 0.98 }}
-                  className={cn(
-                    "flex items-center gap-3 px-5 py-3.5 rounded-2xl transition-colors duration-300 relative overflow-hidden",
-                    isActive
-                      ? "bg-white/10 text-white shadow-inner border border-white/5"
-                      : "text-muted-foreground hover:text-white"
-                  )}>
-                  <Icon className={cn(
-                    "h-5 w-5 transition-all duration-300",
-                    isActive ? "text-primary scale-110" : "group-hover:text-white group-hover:scale-110"
-                  )} />
-                  <span className="font-medium text-sm tracking-wide">{item.label}</span>
+          {/* Navigation */}
+          <div className="flex-1 overflow-y-auto py-6 px-3">
+            <nav className="space-y-1">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = location.pathname === item.path;
 
-                  {/* Active Indicator */}
-                  {isActive && (
+                return (
+                  <Link key={item.path} to={item.path}>
                     <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full shadow-[0_0_10px_rgba(0,122,255,0.5)]"
-                    />
-                  )}
-                </motion.div>
-              </Link>
-            );
-          })}
-        </div>
+                      whileHover={{ x: 4 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={cn(
+                        "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 relative group",
+                        isActive
+                          ? "bg-white/[0.08] text-white"
+                          : "text-muted-foreground hover:bg-white/[0.04] hover:text-foreground"
+                      )}
+                    >
+                      {/* Active Indicator */}
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeIndicator"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 gradient-primary rounded-r-full"
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        />
+                      )}
 
-        {/* Footer Actions */}
-        <div className="p-6 space-y-3 bg-gradient-to-t from-black/40 to-transparent">
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-muted-foreground hover:text-white hover:bg-white/5 rounded-2xl h-11 px-4 transition-all duration-300"
-            onClick={toggleTheme}
-          >
-            {theme === "dark" ? <Sun className="mr-3 h-4 w-4" /> : <Moon className="mr-3 h-4 w-4" />}
-            <span className="text-sm font-medium">{theme === "dark" ? "Modo Claro" : "Modo Escuro"}</span>
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-2xl h-11 px-4 transition-all duration-300"
-            onClick={handleLogout}
-          >
-            <LogOut className="mr-3 h-4 w-4" />
-            <span className="text-sm font-medium">Sair</span>
-          </Button>
+                      <Icon
+                        className={cn(
+                          "h-4 w-4 transition-transform duration-200",
+                          isActive ? "text-primary scale-110" : "group-hover:scale-110"
+                        )}
+                      />
+                      <span className="text-sm font-medium">{item.label}</span>
+                    </motion.div>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Footer Actions */}
+          <div className="p-3 border-t border-white/[0.06] space-y-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-white/[0.04] h-10"
+              onClick={toggleTheme}
+            >
+              {theme === "dark" ? (
+                <Sun className="mr-2 h-4 w-4" />
+              ) : (
+                <Moon className="mr-2 h-4 w-4" />
+              )}
+              <span className="text-sm">{theme === "dark" ? "Modo Claro" : "Modo Escuro"}</span>
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-500/10 h-10"
+              onClick={handleLogout}
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span className="text-sm">Sair</span>
+            </Button>
+          </div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-80 p-6 md:p-10 min-h-screen relative z-10 overflow-x-hidden">
+      <main className="flex-1 md:ml-72 relative z-10 overflow-x-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="max-w-7xl mx-auto space-y-10"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="min-h-screen p-6 md:p-8"
           >
-            {children}
+            <div className="max-w-7xl mx-auto space-y-6">
+              {children}
+            </div>
           </motion.div>
         </AnimatePresence>
       </main>

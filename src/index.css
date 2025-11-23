@@ -2,121 +2,191 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* 
+╔═══════════════════════════════════════════════════════════╗
+║  AUTOTHREADS DESIGN SYSTEM                                ║
+║  Premium • Sophisticated • Clean                          ║
+╚═══════════════════════════════════════════════════════════╝
 */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @layer base {
   :root {
-    /* Base Colors - Midnight Apple Theme */
-    --background: 240 10% 3.9%;
+    /* ━━━ Pure Blacks & Elegant Grays ━━━ */
+    --background: 0 0% 0%;
+    /* Pure black */
     --foreground: 0 0% 98%;
+    /* Almost white */
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 15% 8%;
+    /* Deep charcoal */
+    --card-foreground: 0 0% 95%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 15% 8%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 210 100% 50%;
-    /* Apple Blue */
-    --primary-foreground: 0 0% 98%;
+    /* ━━━ Refined Accents ━━━ */
+    --primary: 220 90% 56%;
+    /* Electric Blue */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 15% 12%;
+    /* Subtle gray */
+    --secondary-foreground: 0 0% 85%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 260 70% 60%;
+    /* Royal Purple */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    /* ━━━ Status Colors ━━━ */
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --success: 142 76% 45%;
+    --warning: 38 92% 50%;
+
+    /* ━━━ Borders & Inputs ━━━ */
+    --border: 0 0% 100% / 0.06;
+    /* Ultra-subtle */
+    --input: 0 0% 100% / 0.08;
+    --ring: 220 90% 56%;
 
     --radius: 1rem;
-    /* Increased radius for squircles feel */
 
-    /* Sidebar specific */
-    --sidebar-background: 240 10% 3.9%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    /* ━━━ Sidebar ━━━ */
+    --sidebar-background: 220 20% 6%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 220 90% 56%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* Custom Effects */
-    --gradient-primary: linear-gradient(135deg, #007AFF, #5856D6);
-    /* Apple Blue to Purple */
-    --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-bg: rgba(0, 0, 0, 0.4);
+    --sidebar-accent: 220 15% 12%;
+    --sidebar-accent-foreground: 0 0% 85%;
+    --sidebar-border: 0 0% 100% / 0.06;
+    --sidebar-ring: 220 90% 56%;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
-
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 210 100% 50%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --card: 220 15% 8%;
+    --card-foreground: 0 0% 95%;
+    --popover: 220 15% 8%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 220 90% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 0 0% 85%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 260 70% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 100% / 0.06;
+    --input: 0 0% 100% / 0.08;
+    --ring: 220 90% 56%;
   }
 }
 
 @layer utilities {
+
+  /* ━━━ Glass Effects ━━━ */
+  .glass-card {
+    @apply bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-2xl border border-white/[0.08];
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  }
+
   .glass-panel {
-    @apply bg-black/40 backdrop-blur-3xl border border-white/10 shadow-2xl;
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06];
   }
 
-  .perspective-1000 {
-    perspective: 1000px;
+  /* ━━━ Gradients ━━━ */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-[#3B82F6] via-[#6366F1] to-[#8B5CF6];
   }
 
-  .preserve-3d {
-    transform-style: preserve-3d;
+  .gradient-accent {
+    @apply bg-gradient-to-r from-[#8B5CF6] to-[#A855F7];
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400;
   }
 
-  .hover-card-effect {
-    @apply transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 hover:border-white/20;
+  /* ━━━ Elevations ━━━ */
+  .elevation-sm {
+    @apply shadow-[0_2px_8px_0_rgba(0, 0, 0, 0.3)];
   }
 
+  .elevation-md {
+    @apply shadow-[0_4px_16px_0_rgba(0, 0, 0, 0.4)];
+  }
+
+  .elevation-lg {
+    @apply shadow-[0_8px_32px_0_rgba(0, 0, 0, 0.5)];
+  }
+
+  /* ━━━ Hover Effects ━━━ */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-[0_0_24px_rgba(59, 130, 246, 0.3)];
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-[1.02];
+  }
+
+  /* ━━━ Animations ━━━ */
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+    animation: fadeIn 0.5s ease-out;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out forwards;
+    animation: slideUp 0.5s ease-out;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }
 
@@ -126,23 +196,50 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30 selection:text-primary-foreground;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
+  /* ━━━ Typography ━━━ */
+  h1 {
+    @apply text-4xl font-bold tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+
+  h4 {
+    @apply text-xl font-semibold;
+  }
+
+  h5 {
+    @apply text-lg font-medium;
+  }
+
   h6 {
-    @apply font-semibold tracking-tight;
+    @apply text-base font-medium;
   }
 
-  /* Custom Scrollbar Styles - Minimalist */
+  p {
+    @apply leading-7 text-foreground/90;
+  }
+
+  small {
+    @apply text-sm text-muted-foreground;
+  }
+
+  /* ━━━ Custom Scrollbar ━━━ */
   * {
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
   }
 
   *::-webkit-scrollbar {
@@ -155,21 +252,26 @@ All colors MUST be HSL.
   }
 
   *::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.3);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 999px;
-    transition: background 0.3s ease;
+    transition: background 0.2s;
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground) / 0.5);
+    background: rgba(255, 255, 255, 0.2);
   }
 
-  *::-webkit-scrollbar-corner {
-    background: transparent;
+  /* ━━━ Selection ━━━ */
+  ::selection {
+    @apply bg-primary/30 text-foreground;
+  }
+
+  ::-moz-selection {
+    @apply bg-primary/30 text-foreground;
   }
 }
 
-/* Hide Lovable badge and elements */
+/* ━━━ Hide External Badges ━━━ */
 a[href*="lovable.dev"],
 iframe[src*="lovable.dev"],
 div[style*="Edit with Lovable"],

@@ -110,7 +110,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {[
             {
               title: "Contas Conectadas",
@@ -147,18 +147,18 @@ const Dashboard = () => {
           ].map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title} className="border-white/5 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 group">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground group-hover:text-white transition-colors">{stat.title}</CardTitle>
-                  <div className={`p-2 rounded-lg ${stat.bg} transition-colors`}>
+              <Card key={stat.title} className="group hover-lift">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
+                  <div className={`p-2 rounded-lg ${stat.bg}`}>
                     <Icon className={`h-4 w-4 ${stat.color}`} />
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-white mb-1">
+                  <div className="text-3xl font-bold text-foreground mb-1">
                     {stat.value}
                   </div>
-                  <p className="text-xs text-muted-foreground/60">
+                  <p className="text-xs text-muted-foreground">
                     {stat.description}
                   </p>
                 </CardContent>
