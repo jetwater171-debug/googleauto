@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Loader2, X, Upload } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ThreadsPostPreview } from "@/components/ThreadsPostPreview";
 
 interface ThreadsAccount {
   id: string;
@@ -212,6 +213,8 @@ const ManualPost = () => {
     }
   };
 
+  const selectedAccountData = accounts.find(acc => acc.id === selectedAccount);
+
   return (
     <Layout>
       <div className="space-y-8 animate-fade-in">
@@ -222,187 +225,218 @@ const ManualPost = () => {
           </p>
         </div>
 
-        <Card className="border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl">
-          <CardHeader>
-            <CardTitle className="text-xl text-white">Criar Post</CardTitle>
-            <CardDescription className="text-base text-muted-foreground">
-              Selecione a conta, tipo de post e conteúdo
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="account" className="text-white/90">Conta do Threads</Label>
-              <Select value={selectedAccount} onValueChange={setSelectedAccount}>
-                <SelectTrigger id="account" className="h-12 bg-white/5 border-white/10 focus:border-primary/50">
-                  <SelectValue placeholder="Selecione uma conta" />
-                </SelectTrigger>
-                <SelectContent className="bg-black/90 border-white/10">
-                  {accounts.map((account) => (
-                    <SelectItem key={account.id} value={account.id}>
-                      <div className="flex items-center gap-2">
-                        <Avatar className="h-6 w-6 border border-white/10">
-                          <AvatarImage src={account.profile_picture_url || undefined} alt={account.username || "Profile"} />
-                          <AvatarFallback>{account.username?.charAt(0).toUpperCase() || "?"}</AvatarFallback>
-                        </Avatar>
-                        {account.username || account.account_id}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="postType" className="text-white/90">Tipo de Post</Label>
-              <Select value={postType} onValueChange={(value: any) => {
-                setPostType(value);
-                setUploadedImages([]);
-              }}>
-                <SelectTrigger className="h-12 bg-white/5 border-white/10 focus:border-primary/50">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-black/90 border-white/10">
-                  <SelectItem value="text">📝 Apenas Texto</SelectItem>
-                  <SelectItem value="image">🖼️ Imagem + Texto</SelectItem>
-                  <SelectItem value="carousel">🖼️🖼️ Carrossel (2-10 imagens)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {postType === 'text' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Form Column */}
+          <Card className="border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl">
+            <CardHeader>
+              <CardTitle className="text-xl text-white">Criar Post</CardTitle>
+              <CardDescription className="text-base text-muted-foreground">
+                Selecione a conta, tipo de post e conteúdo
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="text" className="text-white/90">Texto do Post</Label>
-                <Textarea
-                  id="text"
-                  placeholder="Digite o texto do seu post..."
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  rows={6}
-                  maxLength={500}
-                  required
-                  className="bg-white/5 border-white/10 focus:border-primary/50 resize-none"
-                />
-                <p className="text-xs text-muted-foreground text-right">
-                  {text.length}/500 caracteres
-                </p>
+                <Label htmlFor="account" className="text-white/90">Conta do Threads</Label>
+                <Select value={selectedAccount} onValueChange={setSelectedAccount}>
+                  <SelectTrigger id="account" className="h-12 bg-white/5 border-white/10 focus:border-primary/50">
+                    <SelectValue placeholder="Selecione uma conta" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-black/90 border-white/10">
+                    {accounts.map((account) => (
+                      <SelectItem key={account.id} value={account.id}>
+                        <div className="flex items-center gap-2">
+                          <Avatar className="h-6 w-6 border border-white/10">
+                            <AvatarImage src={account.profile_picture_url || undefined} alt={account.username || "Profile"} />
+                            <AvatarFallback>{account.username?.charAt(0).toUpperCase() || "?"}</AvatarFallback>
+                          </Avatar>
+                          {account.username || account.account_id}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-            )}
 
-            {(postType === 'image' || postType === 'carousel') && (
-              <>
+              <div className="space-y-2">
+                <Label htmlFor="postType" className="text-white/90">Tipo de Post</Label>
+                <Select value={postType} onValueChange={(value: any) => {
+                  setPostType(value);
+                  setUploadedImages([]);
+                }}>
+                  <SelectTrigger className="h-12 bg-white/5 border-white/10 focus:border-primary/50">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-black/90 border-white/10">
+                    <SelectItem value="text">📝 Apenas Texto</SelectItem>
+                    <SelectItem value="image">🖼️ Imagem + Texto</SelectItem>
+                    <SelectItem value="carousel">🖼️🖼️ Carrossel (2-10 imagens)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {postType === 'text' && (
                 <div className="space-y-2">
-                  <Label htmlFor="text" className="text-white/90">Legenda (opcional)</Label>
+                  <Label htmlFor="text" className="text-white/90">Texto do Post</Label>
                   <Textarea
                     id="text"
-                    placeholder="Adicione uma legenda..."
+                    placeholder="Digite o texto do seu post..."
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    rows={4}
+                    rows={6}
                     maxLength={500}
+                    required
                     className="bg-white/5 border-white/10 focus:border-primary/50 resize-none"
                   />
                   <p className="text-xs text-muted-foreground text-right">
                     {text.length}/500 caracteres
                   </p>
                 </div>
+              )}
 
-                <div className="space-y-2">
-                  <Label htmlFor="images" className="text-white/90">
-                    {postType === 'image' ? 'Selecionar Imagem' : 'Selecionar Imagens (2-10)'}
-                  </Label>
-                  <div className="flex items-center gap-2">
-                    <Label htmlFor="file-upload" className="cursor-pointer flex-1">
-                      <Button disabled={uploading || (postType === 'image' && uploadedImages.length >= 1) || (postType === 'carousel' && uploadedImages.length >= 10)} className="w-full shadow-lg shadow-primary/20" asChild>
-                        <span>
-                          {uploading ? (
-                            <>
-                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                              Enviando...
-                            </>
-                          ) : (
-                            <>
-                              <Upload className="mr-2 h-4 w-4" />
-                              Enviar {postType === 'carousel' ? 'Imagens' : 'Imagem'}
-                            </>
-                          )}
-                        </span>
-                      </Button>
-                    </Label>
-                    <Input
-                      id="file-upload"
-                      type="file"
-                      accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
-                      multiple={postType === 'carousel'}
-                      onChange={handleImageUpload}
-                      className="hidden"
+              {(postType === 'image' || postType === 'carousel') && (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="text" className="text-white/90">Legenda (opcional)</Label>
+                    <Textarea
+                      id="text"
+                      placeholder="Adicione uma legenda..."
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      rows={4}
+                      maxLength={500}
+                      className="bg-white/5 border-white/10 focus:border-primary/50 resize-none"
                     />
+                    <p className="text-xs text-muted-foreground text-right">
+                      {text.length}/500 caracteres
+                    </p>
                   </div>
 
-                  {postType === 'image' && uploadedImages[0] && (
-                    <div className="relative mt-2">
-                      <img src={uploadedImages[0]} className="w-full h-64 object-cover rounded-xl border border-white/10" alt="Preview" />
-                      <Button
-                        variant="destructive"
-                        size="icon"
-                        className="absolute top-2 right-2 shadow-lg"
-                        onClick={() => setUploadedImages([])}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
+                  <div className="space-y-2">
+                    <Label htmlFor="images" className="text-white/90">
+                      {postType === 'image' ? 'Selecionar Imagem' : 'Selecionar Imagens (2-10)'}
+                    </Label>
+                    <div className="flex items-center gap-2">
+                      <Label htmlFor="file-upload" className="cursor-pointer flex-1">
+                        <Button disabled={uploading || (postType === 'image' && uploadedImages.length >= 1) || (postType === 'carousel' && uploadedImages.length >= 10)} className="w-full shadow-lg shadow-primary/20" asChild>
+                          <span>
+                            {uploading ? (
+                              <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Enviando...
+                              </>
+                            ) : (
+                              <>
+                                <Upload className="mr-2 h-4 w-4" />
+                                Enviar {postType === 'carousel' ? 'Imagens' : 'Imagem'}
+                              </>
+                            )}
+                          </span>
+                        </Button>
+                      </Label>
+                      <Input
+                        id="file-upload"
+                        type="file"
+                        accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                        multiple={postType === 'carousel'}
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
                     </div>
-                  )}
 
-                  {postType === 'carousel' && uploadedImages.length > 0 && (
-                    <div className="grid grid-cols-3 gap-2 mt-2">
-                      {uploadedImages.map((url, index) => (
-                        <div key={index} className="relative group">
-                          <img src={url} className="w-full h-32 object-cover rounded-lg border border-white/10 transition-transform group-hover:scale-[1.02]" alt={`Preview ${index + 1}`} />
-                          <Button
-                            variant="destructive"
-                            size="icon"
-                            className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
-                            onClick={() => removeImage(index)}
-                          >
-                            <X className="h-3 w-3" />
-                          </Button>
-                          <div className="absolute top-1 left-1 bg-black/60 backdrop-blur-sm text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold border border-white/10">
-                            {index + 1}
+                    {postType === 'image' && uploadedImages[0] && (
+                      <div className="relative mt-2">
+                        <img src={uploadedImages[0]} className="w-full h-64 object-cover rounded-xl border border-white/10" alt="Preview" />
+                        <Button
+                          variant="destructive"
+                          size="icon"
+                          className="absolute top-2 right-2 shadow-lg"
+                          onClick={() => setUploadedImages([])}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    )}
+
+                    {postType === 'carousel' && uploadedImages.length > 0 && (
+                      <div className="grid grid-cols-3 gap-2 mt-2">
+                        {uploadedImages.map((url, index) => (
+                          <div key={index} className="relative group">
+                            <img src={url} className="w-full h-32 object-cover rounded-lg border border-white/10 transition-transform group-hover:scale-[1.02]" alt={`Preview ${index + 1}`} />
+                            <Button
+                              variant="destructive"
+                              size="icon"
+                              className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                              onClick={() => removeImage(index)}
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                            <div className="absolute top-1 left-1 bg-black/60 backdrop-blur-sm text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold border border-white/10">
+                              {index + 1}
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                        ))}
+                      </div>
+                    )}
 
-                  {postType === 'carousel' && (
-                    <p className="text-sm text-muted-foreground">
-                      {uploadedImages.length} de 10 imagens selecionadas
-                      {uploadedImages.length < 2 && " (mínimo 2)"}
-                    </p>
-                  )}
-                </div>
-              </>
-            )}
-
-            <Button
-              onClick={handlePost}
-              disabled={loading || !selectedAccount}
-              className="w-full h-12 text-lg shadow-lg shadow-primary/20"
-              size="lg"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Publicando...
-                </>
-              ) : (
-                <>
-                  <Send className="mr-2 h-5 w-5" />
-                  Publicar Agora
+                    {postType === 'carousel' && (
+                      <p className="text-sm text-muted-foreground">
+                        {uploadedImages.length} de 10 imagens selecionadas
+                        {uploadedImages.length < 2 && " (mínimo 2)"}
+                      </p>
+                    )}
+                  </div>
                 </>
               )}
-            </Button>
-          </CardContent>
-        </Card>
+
+              <Button
+                onClick={handlePost}
+                disabled={loading || !selectedAccount}
+                className="w-full h-12 text-lg shadow-lg shadow-primary/20"
+                size="lg"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Publicando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-5 w-5" />
+                    Publicar Agora
+                  </>
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Preview Column */}
+          <div className="space-y-4">
+            <div>
+              <h2 className="text-2xl font-semibold text-white mb-2">Preview</h2>
+              <p className="text-sm text-muted-foreground">
+                Veja como seu post vai aparecer no Threads
+              </p>
+            </div>
+
+            <div className="sticky top-8">
+              {selectedAccountData ? (
+                <ThreadsPostPreview
+                  username={selectedAccountData.username || "username"}
+                  profilePicture={selectedAccountData.profile_picture_url || undefined}
+                  content={text}
+                  images={uploadedImages}
+                />
+              ) : (
+                <Card className="border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl p-8">
+                  <div className="text-center text-muted-foreground">
+                    <p className="text-lg mb-2">👤</p>
+                    <p className="text-sm">Selecione uma conta para ver o preview</p>
+                  </div>
+                </Card>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </Layout>
   );
